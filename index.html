@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Savings — Launch a coin for any X handle. Every trade deposits into their savings account.</title>
+<meta name="description" content="Savings is a launchpad on Robinhood Chain. Launch a coin for any X handle. Every trade deposits 2% into a savings account in that handle's name. It earns interest until they sign in and withdraw.">
+<meta property="og:title" content="Savings — every trade is a deposit">
+<meta property="og:description" content="Launch a coin for any X handle. Every trade deposits into their savings account. It grows until they show up.">
+<meta property="og:image" content="og.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0a1a33; --navy2:#10264a; --navy3:#162f5a; --ink:#0b1526;
+  --paper:#f4efe3; --paper2:#fbf8f1; --paper3:#e9e2d0;
+  --gold:#e8c874; --gold2:#c9a24a; --gold3:#8f7130;
+  --mint:#7fd9a6; --red:#e05a4e;
+  --mute:rgba(244,239,227,.62); --mute2:rgba(244,239,227,.4);
+  --line:rgba(244,239,227,.12); --line2:rgba(11,21,38,.12);
+  --fd:"Fraunces",Georgia,serif; --ft:"Manrope",system-ui,sans-serif; --fm:"DM Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--navy);color:var(--paper);font-family:var(--ft);font-size:16px;line-height:1.55;overflow-x:clip;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(1200px 600px at 15% -10%,rgba(232,200,116,.13),transparent 60%),
+             radial-gradient(900px 500px at 100% 20%,rgba(22,47,90,.9),transparent 60%),
+             repeating-linear-gradient(0deg,rgba(244,239,227,.03) 0 1px,transparent 1px 44px),
+             repeating-linear-gradient(90deg,rgba(244,239,227,.03) 0 1px,transparent 1px 44px)}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--fd);font-weight:500;letter-spacing:-.01em;margin:0}
+.mono{font-family:var(--fm)}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 24px}
+button{font-family:inherit;cursor:pointer}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(10,26,51,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hd{display:flex;align-items:center;gap:18px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--fd);font-size:22px;font-weight:600}
+.brand img{width:30px;height:30px;border-radius:8px}
+nav.main{display:flex;gap:18px;margin-left:16px;font-size:13px;color:var(--mute)}
+nav.main a b{font-family:var(--fm);font-weight:400;color:var(--gold);margin-right:5px}
+nav.main a:hover{color:var(--paper)}
+.hd .sp{flex:1}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:transparent;color:var(--paper);padding:9px 14px;border-radius:10px;font-size:13px;font-weight:600;transition:.15s}
+.btn:hover{border-color:var(--gold);color:var(--gold)}
+.btn.gold{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.btn.gold:hover{background:#f1d68e;color:var(--ink)}
+.btn.soon{opacity:.45;cursor:not-allowed}
+.btn.small{padding:7px 11px;font-size:12px}
+.btn.paper{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.btn.paper:hover{background:#fff;color:var(--ink)}
+
+/* marquee */
+.mq{border-bottom:1px solid var(--line);overflow:hidden;white-space:nowrap;font-family:var(--fm);font-size:12px;color:var(--gold);letter-spacing:.06em;text-transform:uppercase;background:rgba(0,0,0,.18)}
+.mq div{display:inline-block;padding:9px 0;animation:mq 46s linear infinite}
+.mq span{margin:0 26px}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* hero */
+.hero{padding:76px 0 60px;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.kicker{font-family:var(--fm);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+h1{font-size:clamp(38px,5vw,64px);line-height:1.02}
+h1 em{font-style:italic;color:var(--gold);font-weight:400}
+.lead{font-size:18px;color:var(--mute);max-width:560px;margin:22px 0 26px}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-family:var(--fm);font-size:12px;border:1px solid var(--line);border-radius:999px;padding:6px 11px;color:var(--mute);cursor:default}
+.chip b{color:var(--paper);font-weight:500}
+#caBox{cursor:pointer}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px;padding-top:24px;border-top:1px solid var(--line)}
+.facts b{display:block;font-family:var(--fd);font-size:22px;font-weight:500;margin-bottom:4px}
+.facts span{font-size:13px;color:var(--mute)}
+
+/* passbook */
+.bookwrap{position:relative}
+.book{position:relative;background:var(--paper);color:var(--ink);border-radius:14px;padding:22px 24px 20px;box-shadow:0 30px 60px rgba(0,0,0,.45),0 1px 0 rgba(255,255,255,.4) inset;transform:rotate(.6deg);overflow:hidden}
+.book::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 27px,rgba(11,21,38,.06) 27px 28px);opacity:.9}
+.book::after{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:linear-gradient(180deg,var(--gold),var(--gold2))}
+.bk-head{display:flex;justify-content:space-between;align-items:center;font-family:var(--fm);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold3);position:relative}
+.bk-owner{display:flex;justify-content:space-between;align-items:center;margin-top:10px;position:relative}
+.bk-owner b{font-family:var(--fd);font-size:24px;font-weight:600}
+.status{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:5px 9px;border-radius:999px;background:#e3f5ea;color:#1d7146;border:1px solid #b8e3c8}
+.status.claimed{background:#eef0f4;color:#3a4a66;border-color:#cfd6e2}
+.bk-bal{margin-top:12px;position:relative}
+.bk-bal small{display:block;font-family:var(--fm);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#5d6577}
+.bk-bal div{font-family:var(--fm);font-size:clamp(28px,3.2vw,40px);font-weight:500;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums}
+.bk-bal div i{font-style:normal;color:#7d8597;font-size:.62em}
+.bk-rows{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;position:relative}
+.bk-rows div{border-top:1px solid var(--line2);padding-top:8px}
+.bk-rows small{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#5d6577}
+.bk-rows b{font-family:var(--fm);font-weight:500;font-size:14px;font-variant-numeric:tabular-nums}
+.bk-rows b.up{color:#1d7146}
+.ledger{margin-top:14px;font-family:var(--fm);font-size:12px;position:relative;height:140px;overflow:hidden}
+.ledger div{display:grid;grid-template-columns:56px 1fr auto;gap:10px;padding:4px 0;border-bottom:1px dashed rgba(11,21,38,.15);animation:rowin .35s ease-out}
+.ledger div span:first-child{color:#7d8597}
+.ledger div span:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.ledger div.dep span:last-child{color:#1d7146}
+.ledger div.int span:last-child{color:var(--gold3)}
+.ledger div.wd span:last-child{color:var(--red)}
+@keyframes rowin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.bk-act{display:flex;justify-content:space-between;align-items:center;margin-top:14px;position:relative;gap:10px;flex-wrap:wrap}
+.bk-act small{font-size:12px;color:#5d6577}
+.stamp{position:absolute;right:22px;top:112px;font-family:var(--fd);font-weight:600;font-size:34px;letter-spacing:.06em;color:var(--red);border:4px solid var(--red);border-radius:8px;padding:2px 12px;transform:rotate(-14deg) scale(1.6);opacity:0;pointer-events:none;mix-blend-mode:multiply;z-index:3}
+.stamp.on{animation:stamp .5s cubic-bezier(.2,1.4,.4,1) forwards}
+.stamp.off{animation:stampoff .6s ease forwards}
+@keyframes stamp{to{transform:rotate(-14deg) scale(1);opacity:.9}}
+@keyframes stampoff{from{opacity:.9;transform:rotate(-14deg) scale(1)}to{opacity:0;transform:rotate(-14deg) scale(1)}}
+.hint{position:absolute;top:-16px;right:20px;background:var(--gold);color:var(--ink);font-family:var(--fm);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:6px;transform:rotate(-2deg);box-shadow:0 6px 16px rgba(0,0,0,.35);z-index:4}
+#drop{position:absolute;inset:0;pointer-events:none;overflow:visible;z-index:5}
+.coin{position:absolute;width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff3c4,var(--gold) 45%,var(--gold2) 100%);box-shadow:0 2px 0 var(--gold3);border:1px solid var(--gold3)}
+.coin::after{content:"$";position:absolute;inset:0;display:grid;place-items:center;font-family:var(--fm);font-size:13px;color:var(--gold3);font-weight:500}
+#rain{position:fixed;inset:0;pointer-events:none;z-index:140}
+
+/* sections */
+section{padding:80px 0;border-top:1px solid var(--line);position:relative}
+.num{position:absolute;right:24px;top:22px;font-family:var(--fd);font-size:120px;font-weight:400;color:rgba(244,239,227,.05);line-height:1;pointer-events:none;user-select:none}
+.sh{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:34px;flex-wrap:wrap}
+.sh h2{font-size:clamp(28px,3.4vw,42px);line-height:1.08;max-width:640px}
+.sh p{color:var(--mute);max-width:460px;margin:0;font-size:15px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card{background:var(--navy2);border:1px solid var(--line);border-radius:14px;padding:22px;min-width:0}
+.card h3{font-size:20px;margin-bottom:8px}
+.card p{color:var(--mute);font-size:14px;margin:0}
+.card .k{font-family:var(--fm);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.paperc{background:var(--paper);color:var(--ink);border-color:transparent}
+.paperc p{color:#4d5567}
+.paperc .k{color:var(--gold3)}
+
+/* lookup */
+.look{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:start}
+.search{display:flex;gap:8px;margin-bottom:16px}
+.search .in{flex:1;display:flex;align-items:center;gap:8px;background:var(--paper);color:var(--ink);border-radius:10px;padding:0 14px;font-family:var(--fm);font-size:16px}
+.search .in span{color:#7d8597}
+.search input{flex:1;border:0;background:transparent;font:inherit;color:inherit;padding:13px 0;outline:0;min-width:0}
+.acct{background:var(--paper);color:var(--ink);border-radius:14px;padding:22px 24px;position:relative;overflow:hidden;min-height:340px}
+.acct::after{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:linear-gradient(180deg,var(--gold),var(--gold2))}
+.acct .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.acct .top b{font-family:var(--fd);font-size:28px;font-weight:600;display:block}
+.acct .top small{font-family:var(--fm);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#5d6577}
+.acct .big{font-family:var(--fm);font-size:clamp(30px,4vw,46px);font-weight:500;letter-spacing:-.02em;margin:14px 0 4px;font-variant-numeric:tabular-nums}
+.acct .sub{font-size:13px;color:#4d5567}
+.kv{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+.kv div{border-top:1px solid var(--line2);padding-top:8px;min-width:0}
+.kv small{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#5d6577}
+.kv b{font-family:var(--fm);font-weight:500;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.stmt{margin-top:18px;font-family:var(--fm);font-size:12px}
+.stmt div{display:grid;grid-template-columns:70px 1fr auto;gap:10px;padding:5px 0;border-bottom:1px dashed rgba(11,21,38,.15)}
+.stmt div span:first-child{color:#7d8597}
+.stmt div span:last-child{text-align:right}
+.stmt div.h span{color:#5d6577;letter-spacing:.08em;text-transform:uppercase;font-size:10px}
+.acct .act{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;align-items:center}
+.acct .act small{font-size:12px;color:#5d6567}
+.steps{display:grid;gap:12px}
+.step{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;background:var(--navy2);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.step i{font-family:var(--fm);font-style:normal;color:var(--gold);font-size:12px;padding-top:3px}
+.step b{display:block;font-family:var(--fd);font-size:18px;font-weight:500;margin-bottom:2px}
+.step p{margin:0;font-size:13px;color:var(--mute)}
+.quick{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.quick button{background:transparent;border:1px solid var(--line);color:var(--mute);border-radius:999px;padding:5px 10px;font-family:var(--fm);font-size:12px}
+.quick button:hover{color:var(--gold);border-color:var(--gold)}
+
+/* how */
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.flow .card{position:relative}
+.flow .card::after{content:"→";position:absolute;right:-16px;top:22px;color:var(--gold);font-size:18px}
+.flow .card:last-child::after{content:""}
+.split{background:var(--paper);color:var(--ink);border-radius:14px;padding:22px 24px}
+.bar{display:flex;height:34px;border-radius:8px;overflow:hidden;margin:12px 0 10px;font-family:var(--fm);font-size:12px;font-weight:500}
+.bar div{display:flex;align-items:center;padding:0 12px;white-space:nowrap}
+.bar .a{background:var(--gold);color:var(--ink);flex:0 0 80%}
+.bar .b{background:var(--ink);color:var(--paper);flex:1}
+.split p{color:#4d5567;font-size:14px;margin:0}
+
+/* calc */
+.calc{display:grid;grid-template-columns:.9fr 1.1fr;gap:24px}
+.ctl{display:grid;gap:18px}
+.ctl label{display:block}
+.ctl label span{display:flex;justify-content:space-between;font-size:13px;color:var(--mute);margin-bottom:8px}
+.ctl label span b{font-family:var(--fm);font-weight:500;color:var(--paper)}
+input[type=range]{width:100%;accent-color:var(--gold)}
+.out{background:var(--paper);color:var(--ink);border-radius:14px;padding:22px 24px}
+.out .h{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
+.out .h b{font-family:var(--fm);font-size:30px;font-weight:500;font-variant-numeric:tabular-nums}
+.out .h small{font-family:var(--fm);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#5d6577}
+.ladder{margin-top:16px;display:grid;gap:8px}
+.ladder div{display:grid;grid-template-columns:70px 1fr 110px;gap:10px;align-items:center;font-family:var(--fm);font-size:13px}
+.ladder div span:first-child{color:#5d6577}
+.ladder div span:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.ladder .bar2{height:14px;background:#e6e0d0;border-radius:4px;overflow:hidden}
+.ladder .bar2 i{display:block;height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));border-radius:4px;transition:width .4s}
+.ladder .bar2 i.p{background:var(--ink)}
+.legend{display:flex;gap:16px;font-family:var(--fm);font-size:11px;color:#5d6577;margin-top:12px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.note{margin-top:14px;font-size:13px;color:#4d5567;border-top:1px solid var(--line2);padding-top:12px}
+
+/* ledger tables */
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{font-family:var(--fm);font-weight:400;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute2);text-align:left;padding:0 10px 10px;border-bottom:1px solid var(--line)}
+.tbl td{padding:11px 10px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.tbl tr.r{cursor:pointer}
+.tbl tr.r:hover td{background:rgba(244,239,227,.04)}
+.tbl td.m{font-family:var(--fm);font-size:12px}
+.tbl td.g{color:var(--mint)}
+.tbl .st{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border-radius:999px;border:1px solid var(--line);color:var(--mute)}
+.tbl .st.u{color:var(--mint);border-color:rgba(127,217,166,.4)}
+.feed{font-family:var(--fm);font-size:12px;height:392px;overflow:hidden;position:relative}
+.feed div{display:grid;grid-template-columns:52px 1fr auto;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);animation:rowin .4s ease-out}
+.feed div span:first-child{color:var(--mute2)}
+.feed div span:last-child{color:var(--mint)}
+.feed::after{content:"";position:absolute;left:0;right:0;bottom:0;height:80px;background:linear-gradient(transparent,var(--navy2))}
+
+/* token */
+.burn{background:linear-gradient(135deg,#1b1810,#0a0906);border:1px solid rgba(232,200,116,.25);border-radius:14px;padding:26px;position:relative;overflow:hidden}
+.burn::before{content:"";position:absolute;inset:-40% -20% auto;height:80%;background:radial-gradient(circle,rgba(232,200,116,.18),transparent 60%)}
+.burn .k{color:var(--gold)}
+.burn .big{font-family:var(--fm);font-size:clamp(34px,4vw,50px);font-weight:500;color:var(--gold);letter-spacing:-.02em;font-variant-numeric:tabular-nums;position:relative}
+.burn small{display:block;color:var(--mute);font-size:13px;margin-top:6px;position:relative}
+.params{width:100%;border-collapse:collapse;font-size:13px;margin-top:0}
+.params td{padding:10px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.params td:first-child{color:var(--mute);width:42%;font-family:var(--fm);font-size:12px}
+.params td:last-child{font-weight:500}
+
+/* rollout */
+.roll .card b{display:block;font-family:var(--fm);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.roll .card li{color:var(--mute);font-size:14px;margin:6px 0}
+.roll .card ul{margin:0;padding-left:18px}
+.final{margin-top:60px;background:var(--paper);color:var(--ink);border-radius:18px;padding:44px 40px;display:grid;grid-template-columns:1.3fr .7fr;gap:30px;align-items:center}
+.final h2{font-size:clamp(26px,3.2vw,40px);line-height:1.08}
+.final p{color:#4d5567;margin:12px 0 0}
+.final .cta{margin:0;justify-content:flex-end}
+footer{padding:36px 0 60px;color:var(--mute2);font-size:12px;line-height:1.7}
+footer .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:24px}
+
+/* toast */
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--paper);color:var(--ink);padding:12px 16px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:200;box-shadow:0 12px 30px rgba(0,0,0,.4);max-width:90vw;text-align:center}
+#toast.on{opacity:1;transform:translateX(-50%)}
+
+@media (max-width:1000px){
+  nav.main{display:none}
+  .hero{grid-template-columns:1fr;gap:40px;padding-top:44px}
+  .hero>div:last-child{order:-1}
+  .book{transform:none}
+  .look,.calc,.grid2,.final{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr 1fr}
+  .flow .card::after{display:none}
+  .grid3,.grid4{grid-template-columns:1fr 1fr}
+  .final .cta{justify-content:flex-start}
+  .num{font-size:80px}
+}
+@media (max-width:560px){
+  .facts,.grid3,.grid4,.flow,.kv{grid-template-columns:1fr 1fr}
+  .bk-rows{grid-template-columns:1fr 1fr}
+  .hd .btn span.t{display:none}
+  .final{padding:28px 22px}
+  .stamp{font-size:26px;top:96px;right:12px}
+  .status{white-space:nowrap;font-size:9px;padding:4px 7px}
+  .bk-owner b{font-size:20px}
+  .ledger{font-size:11px}.ledger div{grid-template-columns:42px 1fr auto;gap:6px}
+  .book{padding:18px 16px 16px}
+  .tbl td:nth-child(3),.tbl th:nth-child(3),.tbl td:nth-child(2),.tbl th:nth-child(2){display:none}
+  .tbl td,.tbl th{padding-left:6px;padding-right:6px}
+  .bar{font-size:10px}.bar div{padding:0 7px}
+  .ladder div{grid-template-columns:52px 1fr 90px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap hd">
+  <a class="brand" href="#"><img src="assets/logo-96.png" alt="Savings — three stacked coins on navy">Savings</a>
+  <nav class="main">
+    <a href="#lookup"><b>01</b>Look up</a>
+    <a href="#how"><b>02</b>How it works</a>
+    <a href="#calc"><b>03</b>Calculator</a>
+    <a href="#accounts"><b>04</b>Accounts</a>
+    <a href="#token"><b>05</b>$SVNGS</a>
+  </nav>
+  <div class="sp"></div>
+  <button class="btn small" id="sndBtn" type="button">SOUND <span class="mono" id="sndSt">ON</span></button>
+  <a class="btn small xLink" id="xBtn" href="#" target="_blank" rel="noopener">X</a>
+  <a class="btn small gold soon" id="buyBtn" href="#">Buy <span class="t">$SVNGS</span></a>
+</div></header>
+
+<div class="mq"><div>
+  <span>Every trade is a deposit</span><span>Reference rate 4.30% APY</span><span>Compounds daily</span><span>Nobody can touch it but the handle</span><span>No expiry, no sweep, no minimum</span><span>Withdraw to any wallet, free</span><span>Robinhood Chain · chain id 4663</span><span>Launch on Pons</span>
+  <span>Every trade is a deposit</span><span>Reference rate 4.30% APY</span><span>Compounds daily</span><span>Nobody can touch it but the handle</span><span>No expiry, no sweep, no minimum</span><span>Withdraw to any wallet, free</span><span>Robinhood Chain · chain id 4663</span><span>Launch on Pons</span>
+</div></div>
+
+<main class="wrap">
+
+<div class="hero">
+  <div>
+    <div class="kicker">Savings accounts for X handles · Robinhood Chain</div>
+    <h1>Launch a coin for any X handle. Every trade deposits into <em>their savings account.</em></h1>
+    <p class="lead">Name a handle when you launch. The coin is yours. The savings account is theirs. Two percent of every buy and sell lands in it as a deposit, earns interest daily, and waits. When they sign in with X, the whole balance is theirs to withdraw.</p>
+    <div class="cta">
+      <a class="btn gold" href="#lookup">Open an account</a>
+      <a class="btn xLink" href="#" target="_blank" rel="noopener">Follow on X</a>
+    </div>
+    <div class="chips">
+      <span class="chip" id="caBox">CA <b class="ca-val">on launch</b></span>
+      <span class="chip">FEE <b>2%</b></span>
+      <span class="chip">SPLIT <b>80 / 20</b></span>
+      <span class="chip">RATE <b>4.30% ref</b></span>
+      <span class="chip">CHAIN <b>4663</b></span>
+    </div>
+    <div class="facts">
+      <div><b>They don't sign up</b><span>The account opens the moment the coin launches. The handle finds out whenever they find out.</span></div>
+      <div><b>It grows while it waits</b><span>Deposits sit in tokenized Treasury bills. Interest posts every day the account is unclaimed, and every day after.</span></div>
+      <div><b>One sign-in to withdraw</b><span>Sign in with X, connect any wallet, take principal and interest together. Free, in one transaction.</span></div>
+    </div>
+  </div>
+
+  <div class="bookwrap">
+    <div class="hint">live · deposits arriving</div>
+    <div class="book" id="book">
+      <div class="bk-head"><span>Savings account</span><span id="bkNo">No. 4663-0417-2291</span></div>
+      <div class="bk-owner"><b>@sarahtrades</b><span class="status" id="bkStatus">Unclaimed · earning</span></div>
+      <div class="bk-bal"><small>Balance</small><div id="bkBal">$0.00</div></div>
+      <div class="bk-rows">
+        <div><small>Principal</small><b id="bkPr">$0.00</b></div>
+        <div><small>Interest</small><b class="up" id="bkIn">+$0.000000</b></div>
+        <div><small>Deposits</small><b id="bkCnt">0</b></div>
+      </div>
+      <div class="ledger" id="bkLedger"></div>
+      <div class="bk-act">
+        <button class="btn gold" id="bkWd" type="button">Sign in with X · Withdraw</button>
+        <small>free · any wallet · balance keeps earning</small>
+      </div>
+      <div class="stamp" id="bkStamp">PAID OUT</div>
+    </div>
+    <div id="drop"></div>
+  </div>
+</div>
+
+<!-- 01 LOOKUP -->
+<section id="lookup">
+  <div class="num">01</div>
+  <div class="sh">
+    <h2>Look up any handle. The account may already exist.</h2>
+    <p>Anyone can launch a coin for anyone. So the first thing most people do here is check their own name.</p>
+  </div>
+  <div class="look">
+    <div>
+      <div class="search">
+        <div class="in"><span>@</span><input id="q" placeholder="handle" autocomplete="off" spellcheck="false" maxlength="24"></div>
+        <button class="btn gold" id="qBtn" type="button">Look up</button>
+      </div>
+      <div class="acct" id="acct"></div>
+      <div class="quick" id="quick"></div>
+    </div>
+    <div class="steps">
+      <div class="step"><i>01</i><div><b>Found an account in your name?</b><p>Sign in with X on this page. Savings checks that the handle is yours, shows you every deposit since day one, and releases the cleared balance to the wallet you connect. One press, one transaction, no fee.</p></div></div>
+      <div class="step"><i>02</i><div><b>Nothing there yet?</b><p>Then nobody has launched a coin for you. That takes about a minute on Pons, and it does not have to be you who does it. The account will open on the first trade.</p></div></div>
+      <div class="step"><i>03</i><div><b>Want to open one for someone?</b><p>Launch a coin, type their handle, and the account is theirs from the first block. You get the coin. They get a balance that grows whether or not they ever look at it.</p></div></div>
+      <div class="card paperc" style="margin-top:6px"><div class="k">Withdrawal rules</div><p>Partial withdrawals are fine. The account stays open after a withdrawal and keeps taking deposits. Nothing expires, nothing is swept, nothing is burned on the handle's side. The only person who can move the balance is the person who can sign in as that handle.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 HOW -->
+<section id="how">
+  <div class="num">02</div>
+  <div class="sh">
+    <h2>Four steps. The split is written into the coin.</h2>
+    <p>Set at launch, immutable after. Nobody can change it later, including us.</p>
+  </div>
+  <div class="flow">
+    <div class="card"><div class="k">Launch</div><h3>Name a handle</h3><p>Launch on Pons, Robinhood Chain. Type any X handle: yours, a friend's, a stranger's, a company's. The handle does not need to know, agree, or exist on Savings yet.</p></div>
+    <div class="card"><div class="k">Deposit</div><h3>Every trade pays in</h3><p>Each buy and sell carries a 2% fee. 80% of it is deposited to the handle's account in USDG the moment the trade settles. 20% buys $SVNGS on the open market and burns it.</p></div>
+    <div class="card"><div class="k">Compound</div><h3>Interest posts daily</h3><p>The account holds tokenized Treasury bills. Interest accrues every day at the reference rate and is added to principal, so tomorrow's interest is on today's interest too.</p></div>
+    <div class="card"><div class="k">Withdraw</div><h3>Sign in with X</h3><p>The handle signs in, connects a wallet, and takes the balance. Principal, interest, everything. Free, any amount, any time. The account keeps working after they leave.</p></div>
+  </div>
+  <div class="grid2">
+    <div class="split">
+      <div class="k mono" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold3)">Fee split · every trade · 2.00%</div>
+      <div class="bar"><div class="a">80% · deposit to the handle</div><div class="b">20% · burn</div></div>
+      <p>There is no protocol share. Savings does not keep a cut of deposits, interest, or withdrawals. The 20% buys $SVNGS with fees and burns it in the same transaction, so every trade on every coin is a small, permanent bid.</p>
+    </div>
+    <div class="card"><div class="k">Where the yield comes from</div><h3>Treasury bills, not us</h3><p>Deposits are converted into tokenized short-dated U.S. Treasury bills on Robinhood Chain. The reference rate tracks the 3-month bill and is published daily on every account page. When rates move, every account moves with them. We do not set the rate and cannot promise one.</p></div>
+  </div>
+  <div class="grid3" style="margin-top:18px">
+    <div class="card"><div class="k">What if nobody claims</div><h3>It keeps compounding</h3><p>An unclaimed account is not a problem to solve. It is a balance earning interest in someone's name. There is no expiry date and no sweep. Some of the largest accounts here belong to handles that have never signed in.</p></div>
+    <div class="card"><div class="k">What if the coin dies</div><h3>The account doesn't</h3><p>Trading can stop tomorrow. The deposits already made stay in Treasury bills and keep posting interest. The coin and the account are two different things; only one of them needs volume.</p></div>
+    <div class="card"><div class="k">Bonding curve and after</div><h3>Same rules, both sides</h3><p>Deposits are made from the first trade on the curve. When the coin graduates to Uniswap, the fee follows it and deposits continue. Nothing changes for the handle, nothing changes for the split.</p></div>
+  </div>
+</section>
+
+<!-- 03 CALC -->
+<section id="calc">
+  <div class="num">03</div>
+  <div class="sh">
+    <h2>What a coin leaves behind.</h2>
+    <p>Move the sliders. Deposits are 1.6% of volume (80% of the 2% fee). Interest at the reference rate, compounded daily, added to principal.</p>
+  </div>
+  <div class="calc">
+    <div class="ctl">
+      <label><span>Daily volume <b id="vVol">$25,000</b></span><input type="range" id="rVol" min="0" max="100" value="45"></label>
+      <label><span>Days the coin actually trades <b id="vDays">30</b></span><input type="range" id="rDays" min="1" max="365" value="30"></label>
+      <label><span>Reference rate <b id="vRate">4.30%</b></span><input type="range" id="rRate" min="200" max="600" value="430"></label>
+      <div class="card paperc"><div class="k">Reading it</div><p>The deposit total is what the coin pays in before it goes quiet. The interest lines are what the account earns after that, with nobody trading, if the handle simply never withdraws. Most coins here trade for a few weeks. Most accounts are held for years.</p></div>
+    </div>
+    <div class="out">
+      <div class="h"><small>Deposited by the coin</small><b id="oDep">$12,000</b></div>
+      <div class="h" style="margin-top:6px"><small>Per day, while it trades</small><b id="oDay" style="font-size:18px">$400.00</b></div>
+      <div class="ladder" id="ladder"></div>
+      <div class="legend"><span><i style="background:var(--ink)"></i>Principal</span><span><i style="background:var(--gold)"></i>Interest earned</span></div>
+      <div class="note" id="oNote"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 ACCOUNTS -->
+<section id="accounts">
+  <div class="num">04</div>
+  <div class="sh">
+    <h2>Accounts on the books.</h2>
+    <p>Every account and every deposit is on-chain and public. Tap a row to open it above.</p>
+  </div>
+  <div class="grid2">
+    <div class="card" style="padding:22px 12px">
+      <div class="k" style="padding:0 10px">Top accounts · by balance</div>
+      <table class="tbl" id="top"><thead><tr><th>Handle</th><th>Coin</th><th>Interest</th><th>Balance</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="card">
+      <div class="k">Latest deposits</div>
+      <div class="feed" id="feed"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 TOKEN -->
+<section id="token">
+  <div class="num">05</div>
+  <div class="sh">
+    <h2>$SVNGS is what the other 20% buys.</h2>
+    <p>Fixed supply, no emissions, no treasury. Its only job is to be bought and burned by every trade on every coin.</p>
+  </div>
+  <div class="grid2">
+    <div class="burn">
+      <div class="k">Burned so far · simulated</div>
+      <div class="big" id="burned">0</div>
+      <small>$SVNGS removed from supply by fee buybacks. Each trade on each coin sends 0.4% of its size to the burn, market-bought, same block.</small>
+    </div>
+    <div class="card">
+      <table class="params">
+        <tr><td>Token</td><td>Savings · $SVNGS</td></tr>
+        <tr><td>Chain</td><td>Robinhood Chain · chain id 4663</td></tr>
+        <tr><td>Launchpad</td><td>Pons · graduates to Uniswap</td></tr>
+        <tr><td>Supply</td><td>1,000,000,000 · fixed at launch · no emissions</td></tr>
+        <tr><td>Trade fee on launched coins</td><td>2.00% · immutable</td></tr>
+        <tr><td>Split</td><td>80% deposit to handle · 20% buy &amp; burn $SVNGS</td></tr>
+        <tr><td>Deposit asset</td><td>USDG → tokenized 3-month T-bills</td></tr>
+        <tr><td>Reference rate</td><td>4.30% · floats with the bill · published daily</td></tr>
+        <tr><td>Compounding</td><td>Daily · interest added to principal</td></tr>
+        <tr><td>Claim</td><td>Sign in with X · withdraw to any wallet · free</td></tr>
+        <tr><td>Expiry</td><td>None · no sweep · no minimum</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="grid4" style="margin-top:18px">
+    <div class="card"><div class="k">Permanent bid</div><p>Twenty percent of every fee on every coin is a market buy of $SVNGS followed by a burn. Volume anywhere on Savings is demand for the token, and the supply only goes down.</p></div>
+    <div class="card"><div class="k">No treasury</div><p>Savings holds nothing for itself. Deposits belong to handles, interest belongs to handles, and the buyback is burned rather than kept. There is no wallet to watch.</p></div>
+    <div class="card"><div class="k">No emissions</div><p>One billion at launch, all of it. No staking rewards, no team unlock, no vesting schedule to wait out. The only supply event left is the burn.</p></div>
+    <div class="card"><div class="k">Rate is not ours</div><p>Interest comes from the bills the accounts hold, not from token inflation. If the bill pays less, accounts earn less. Nobody is printing yield here.</p></div>
+  </div>
+</section>
+
+<!-- 06 ROLLOUT -->
+<section class="roll">
+  <div class="num">06</div>
+  <div class="sh"><h2>Rollout.</h2><p>Three stages. Nothing on this page is promised before its stage.</p></div>
+  <div class="grid3">
+    <div class="card"><b>Now</b><ul><li>Account lookup, statements and the calculator are live on this page.</li><li>$SVNGS launches on Pons. The split is written into the launch contract before the first coin.</li><li>Sign in with X is wired and audited before any balance can be released.</li></ul></div>
+    <div class="card"><b>At launch</b><ul><li>Launch a coin for any handle from the Savings launch page.</li><li>First deposits land in T-bills the same day. First interest posts the next.</li><li>Public account pages with full deposit history and daily rate.</li></ul></div>
+    <div class="card"><b>After</b><ul><li>Monthly on-chain statements per handle.</li><li>Joint accounts: one coin, up to five handles, split written at launch.</li><li>Handles from other networks once their sign-in can be verified on-chain.</li></ul></div>
+  </div>
+  <div class="final">
+    <div>
+      <h2>The coin can go to zero. The account keeps paying interest.</h2>
+      <p>Launch one for someone who deserves a savings account and does not have one. Or check whether someone already launched one for you.</p>
+    </div>
+    <div class="cta">
+      <a class="btn" style="border-color:var(--ink);color:var(--ink)" href="#lookup">Look up a handle</a>
+      <a class="btn" style="background:var(--ink);color:var(--paper);border-color:var(--ink)" id="buyBtn2" href="#">Buy $SVNGS</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="row">
+    <div>Savings · $SVNGS · Robinhood Chain (4663) · launched on Pons.<br>Independent from Robinhood Markets, Inc., Pons, and X Corp. Handles and balances shown on this page are illustrative. The reference rate shown is an example; the live rate is published on each account page after launch.</div>
+    <div class="mono">savingsfi.vercel.app</div>
+  </div>
+</footer>
+</main>
+
+<div id="rain"></div>
+<div id="toast"></div>
+
+<script>
+/* ============ SETTINGS ============ */
+window.CONTRACT = "";      /* адрес контракта */
+window.TWITTER  = "";      /* ссылка на X */
+window.BUY_URL  = "";      /* ссылка на покупку — пусто, пока Олег не даст */
+/* ================================== */
+var CA=(window.CONTRACT||"").trim(), TW=(window.TWITTER||"").trim(), BUY=(window.BUY_URL||"").trim();
+function toast(m){var t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove("on");},2200);}
+if(CA){
+  document.querySelectorAll(".ca-val").forEach(function(e){e.textContent=CA.slice(0,6)+"…"+CA.slice(-4);});
+  document.getElementById("caBox").addEventListener("click",function(){var b=this.querySelector("b"),old=b.textContent;navigator.clipboard.writeText(CA).then(function(){b.textContent="copied";setTimeout(function(){b.textContent=old;},1200);});});
+}else{
+  document.getElementById("caBox").addEventListener("click",function(){toast("Contract address is published at launch.");});
+}
+if(TW){document.querySelectorAll("#xBtn,.xLink").forEach(function(a){a.href=TW;});}
+else{document.querySelectorAll("#xBtn,.xLink").forEach(function(a){a.addEventListener("click",function(e){e.preventDefault();toast("X account goes live with the launch.");});});}
+["buyBtn","buyBtn2"].forEach(function(id){
+  var b=document.getElementById(id); if(!b) return;
+  if(BUY){b.href=BUY;b.target="_blank";b.rel="noopener";b.classList.remove("soon");}
+  else{b.addEventListener("click",function(e){e.preventDefault();toast("$SVNGS is not trading yet. Buy link appears at launch.");});}
+});
+</script>
+
+<script>
+/* ---------- audio ---------- */
+var AC=null, sfxOn=true;
+try{ sfxOn = localStorage.getItem("sv_snd")!=="off"; }catch(e){}
+function ac(){ try{ if(!AC){ AC=new (window.AudioContext||window.webkitAudioContext)(); } if(AC.state==="suspended") AC.resume(); return AC; }catch(e){ return null; } }
+function tone(f1,f2,dur,type,g){
+  if(!sfxOn) return; var c=ac(); if(!c) return;
+  var o=c.createOscillator(), gg=c.createGain(), t=c.currentTime;
+  o.type=type||"sine"; o.frequency.setValueAtTime(f1,t);
+  if(f2&&f2!==f1) o.frequency.exponentialRampToValueAtTime(f2,t+dur);
+  gg.gain.setValueAtTime(.0001,t); gg.gain.exponentialRampToValueAtTime(g||.05,t+.012);
+  gg.gain.exponentialRampToValueAtTime(.0001,t+dur);
+  o.connect(gg); gg.connect(c.destination); o.start(t); o.stop(t+dur+.05);
+}
+function sClink(){ tone(1900,2400,.09,"sine",.04); setTimeout(function(){tone(2600,2100,.12,"triangle",.03);},40); }
+function sTick(){ tone(1200,900,.04,"square",.012); }
+function sStamp(){ tone(140,60,.16,"square",.08); setTimeout(function(){tone(90,50,.2,"triangle",.06);},30); }
+function sCash(){ [0,90,180].forEach(function(d,i){ setTimeout(function(){ tone(880*Math.pow(1.26,i),880*Math.pow(1.26,i),.18,"triangle",.05); },d); }); setTimeout(function(){ tone(1760,1760,.4,"sine",.05); },300); }
+function sChord(){ [523,659,784].forEach(function(f,i){ setTimeout(function(){ tone(f,f,.35,"triangle",.035); },i*40); }); }
+var sndBtn=document.getElementById("sndBtn"), sndSt=document.getElementById("sndSt");
+function paintSnd(){ sndSt.textContent=sfxOn?"ON":"OFF"; }
+paintSnd();
+sndBtn.addEventListener("click",function(){ sfxOn=!sfxOn; try{localStorage.setItem("sv_snd",sfxOn?"on":"off");}catch(e){} paintSnd(); if(sfxOn) sClink(); });
+document.addEventListener("pointerdown",function(){ ac(); },{once:true});
+
+/* ---------- helpers ---------- */
+var RATE=0.043;
+function money(n,d){ d=(d===undefined)?2:d; var s=n.toFixed(d); var p=s.split("."); p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,","); return "$"+p.join("."); }
+function hash(s){ var h=2166136261; for(var i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619)>>>0; } return h>>>0; }
+function rng(seed){ var x=seed||1; return function(){ x^=x<<13; x>>>=0; x^=x>>>17; x^=x<<5; x>>>=0; return (x>>>0)/4294967296; }; }
+var COINS=["$PAWS","$DRIFT","$NORTH","$BEAN","$HALO","$LOOM","$QUARTZ","$MOSS","$RIVET","$SABLE","$FERN","$ORBIT"];
+var HANDLES=["sarahtrades","basedbob","ser_liquidity","aliceonchain","pumpwatcher","coinmomma","nftnick","0xkira","dexterdegen","marta_writes","hoodmax","quietwhale"];
+function dstr(d){ return (d.getMonth()+1).toString().padStart(2,"0")+"/"+d.getDate().toString().padStart(2,"0"); }
+function tstr(d){ return d.getHours().toString().padStart(2,"0")+":"+d.getMinutes().toString().padStart(2,"0"); }
+
+/* ---------- coin fountain ---------- */
+var drop=document.getElementById("drop"), rain=document.getElementById("rain");
+function dropCoin(x,y,host){
+  host=host||drop; var d=document.createElement("div"); d.className="coin";
+  var W=host.clientWidth||320, H=host.clientHeight||320;
+  if(x===undefined){ x=Math.random()*W; y=-20; }
+  d.style.left=(x-13)+"px"; d.style.top=(y-13)+"px"; host.appendChild(d);
+  var vx=(Math.random()-.5)*8, vy=-5-Math.random()*6, n=0, rot=(Math.random()-.5)*22, px=x-13, py=y-13;
+  (function stp(){ n++; vy+=.42; px+=vx; py+=vy;
+    d.style.transform="translate("+(px-(x-13))+"px,"+(py-(y-13))+"px) rotate("+(n*rot)+"deg)";
+    if(n>120||py>H+320){ d.remove(); return; }
+    if(n>100) d.style.opacity=String(1-(n-100)/20);
+    requestAnimationFrame(stp); })();
+}
+function fountain(n){ var W=drop.clientWidth, H=drop.clientHeight; for(var i=0;i<n;i++){ setTimeout(function(){ dropCoin(W*0.5+(Math.random()-.5)*W*0.5,H*0.72,drop); },i*18); } }
+function bigRain(){ for(var i=0;i<70;i++){ setTimeout(function(){ dropCoin(Math.random()*innerWidth,-30,rain); },i*30); } }
+
+/* ---------- passbook (hero) ---------- */
+var B={pr:1284.33,inn:2.417118,cnt:61,wd:0,last:0};
+var bkBal=document.getElementById("bkBal"), bkPr=document.getElementById("bkPr"), bkIn=document.getElementById("bkIn"), bkCnt=document.getElementById("bkCnt"), bkLedger=document.getElementById("bkLedger");
+function bkPaint(){
+  var bal=B.pr+B.inn, s=bal.toFixed(6), p=s.split(".");
+  bkBal.innerHTML=money(parseFloat(p[0]),0)+"<i>."+p[1]+"</i>";
+  bkPr.textContent=money(B.pr); bkIn.textContent="+"+money(B.inn,6); bkCnt.textContent=B.cnt;
+}
+function bkRow(cls,desc,amt){
+  var d=document.createElement("div"); d.className=cls;
+  d.innerHTML="<span>"+tstr(new Date())+"</span><span>"+desc+"</span><span>"+amt+"</span>";
+  bkLedger.insertBefore(d,bkLedger.firstChild);
+  while(bkLedger.children.length>5) bkLedger.removeChild(bkLedger.lastChild);
+}
+bkRow("int","Interest posted · daily","+$0.151203");
+bkRow("dep","Deposit · $PAWS sell · 2% fee","+$0.84");
+bkRow("dep","Deposit · $PAWS buy · 2% fee","+$2.11");
+bkRow("dep","Deposit · $DRIFT buy · 2% fee","+$0.37");
+bkPaint();
+function bkDeposit(){
+  var amt=+(0.08+Math.random()*3.9).toFixed(2), c=COINS[Math.floor(Math.random()*3)], side=Math.random()<.6?"buy":"sell";
+  B.pr+=amt; B.cnt++; bkRow("dep","Deposit · "+c+" "+side+" · 2% fee","+"+money(amt)); sClink();
+  var W=drop.clientWidth||320; dropCoin(W*0.5+(Math.random()-.5)*W*0.6,drop.clientHeight*0.55,drop);
+  bkPaint(); setTimeout(bkDeposit,2200+Math.random()*4800);
+}
+setTimeout(bkDeposit,1800);
+(function tick(){ var now=performance.now(); if(B.last){ var dt=(now-B.last)/1000; B.inn+=(B.pr+B.inn)*RATE/365/86400*dt*60; } B.last=now; bkPaint(); requestAnimationFrame(tick); })();
+/* dt*60: interest is shown at 60× real speed so the sixth decimal moves on screen */
+setInterval(function(){ if(document.hidden) return; B.inn+=0.000041; bkRow("int","Interest posted","+$0.000041"); sTick(); },14000);
+var stamp=document.getElementById("bkStamp"), bkStatus=document.getElementById("bkStatus");
+document.getElementById("bkWd").addEventListener("click",function(){
+  var bal=B.pr+B.inn; if(bal<0.01){ toast("Nothing to withdraw yet. Deposits are still arriving."); return; }
+  B.wd++; stamp.className="stamp on"; sStamp(); setTimeout(sCash,180);
+  bkRow("wd","Withdrawal · to 0x8f…e4c1 · signed in with X","−"+money(bal));
+  B.pr=0; B.inn=0; bkPaint(); bkStatus.textContent="Withdrawn · still earning"; bkStatus.classList.add("claimed");
+  fountain(B.wd%5===0?60:26); if(B.wd%5===0) bigRain();
+  setTimeout(function(){ stamp.className="stamp off"; },1800);
+  setTimeout(function(){ bkStatus.textContent="Open · earning"; bkStatus.classList.remove("claimed"); },4000);
+});
+
+/* ---------- lookup ---------- */
+var acct=document.getElementById("acct"), q=document.getElementById("q");
+function account(h){
+  h=h.replace(/^@/,"").toLowerCase().replace(/[^a-z0-9_]/g,"").slice(0,24);
+  if(!h) return null;
+  var r=rng(hash(h)+7), days=Math.floor(3+r()*140), ncoins=1+Math.floor(r()*3), coins=[];
+  var idx=Math.floor(r()*COINS.length); for(var i=0;i<ncoins;i++){ coins.push(COINS[(idx+i*5)%COINS.length]); }
+  var vol=Math.pow(10,3+r()*2.2)*ncoins, tradedDays=Math.min(days,Math.floor(5+r()*40));
+  var principal=vol*0.016*tradedDays, deps=Math.floor(tradedDays*(14+r()*80));
+  var interest=principal*(Math.pow(1+RATE/365,days-tradedDays/2)-1);
+  var claimed=r()<0.3, withdrawn=claimed?principal*(0.4+r()*0.5):0;
+  var exists=r()<0.86;
+  var opened=new Date(Date.now()-days*86400000);
+  var no="4663-"+(1000+Math.floor(r()*9000))+"-"+(1000+Math.floor(r()*9000));
+  return {h:h,days:days,coins:coins,principal:principal,interest:interest,deps:deps,claimed:claimed,withdrawn:withdrawn,exists:exists,opened:opened,no:no,r:r};
+}
+function renderAcct(a){
+  if(!a){ acct.innerHTML="<div class='top'><div><small>Savings account</small><b>Type a handle</b></div></div><p class='sub' style='margin-top:12px'>Any X handle. Yours, a friend's, a stranger's. If a coin was ever launched for it, the account is here.</p>"; return; }
+  if(!a.exists){
+    acct.innerHTML="<div class='top'><div><small>Savings account</small><b>@"+a.h+"</b></div><span class='status claimed'>No account yet</span></div><div class='big' style='color:#7d8597'>$0.00</div><div class='sub'>Nobody has launched a coin for @"+a.h+" yet. The account opens on the first trade of the first coin that names this handle. That can be your coin.</div><div class='act'><button class='btn' style='border-color:var(--ink);color:var(--ink)' type='button' onclick='toast(\"Launching opens with $SVNGS. Have the handle ready.\")'>Launch a coin for @"+a.h+"</button></div>";
+    sTick(); return;
+  }
+  var bal=a.principal+a.interest-a.withdrawn;
+  var rows="", r=a.r, d=new Date();
+  for(var i=0;i<6;i++){
+    var kind=i===2?"int":(i===4&&a.claimed?"wd":"dep");
+    var dd=new Date(d.getTime()-i*Math.floor(1+r()*3)*3600000*7);
+    if(kind==="dep"){ var amt=vol2(r); rows+="<div><span>"+dstr(dd)+"</span><span>Deposit · "+a.coins[Math.floor(r()*a.coins.length)]+" "+(r()<.6?"buy":"sell")+" · 2% fee</span><span style='color:#1d7146'>+"+money(amt)+"</span></div>"; }
+    else if(kind==="int"){ rows+="<div><span>"+dstr(dd)+"</span><span>Interest posted · daily · 4.30%</span><span style='color:var(--gold3)'>+"+money(bal*RATE/365,4)+"</span></div>"; }
+    else{ rows+="<div><span>"+dstr(dd)+"</span><span>Withdrawal · signed in with X · 0x"+hash(a.h).toString(16).slice(0,4)+"…</span><span style='color:var(--red)'>−"+money(a.withdrawn)+"</span></div>"; }
+  }
+  acct.innerHTML=
+   "<div class='top'><div><small>Savings account · "+a.no+"</small><b>@"+a.h+"</b></div><span class='status"+(a.claimed?" claimed":"")+"'>"+(a.claimed?"Signed in · withdrew once":"Unclaimed · earning")+"</span></div>"+
+   "<div class='big'>"+money(bal)+"</div><div class='sub'>Balance today. Opened "+a.days+" days ago by the first trade of "+a.coins[0]+(a.coins.length>1?", later joined by "+a.coins.slice(1).join(" and "):"")+".</div>"+
+   "<div class='kv'><div><small>Principal</small><b>"+money(a.principal)+"</b></div><div><small>Interest earned</small><b style='color:#1d7146'>+"+money(a.interest)+"</b></div><div><small>Deposits</small><b>"+a.deps.toLocaleString()+"</b></div><div><small>Withdrawn</small><b>"+money(a.withdrawn)+"</b></div></div>"+
+   "<div class='stmt'><div class='h'><span>Date</span><span>Statement · last entries</span><span>Amount</span></div>"+rows+"</div>"+
+   "<div class='act'><button class='btn' style='background:var(--ink);color:var(--paper);border-color:var(--ink)' type='button' onclick='toast(\"Sign in with X opens with the launch. The balance waits.\")'>Sign in with X · withdraw "+money(bal)+"</button><small>free · any wallet</small></div>";
+  sChord();
+}
+function vol2(r){ return 0.05+r()*r()*9; }
+function lookup(v){ var a=account(v||""); renderAcct(a); if(a){ q.value=a.h; } }
+document.getElementById("qBtn").addEventListener("click",function(){ lookup(q.value); });
+q.addEventListener("keydown",function(e){ if(e.key==="Enter") lookup(q.value); });
+renderAcct(null);
+var quick=document.getElementById("quick");
+["sarahtrades","basedbob","quietwhale","0xkira","yourhandle"].forEach(function(h){ var b=document.createElement("button"); b.type="button"; b.textContent="@"+h; b.addEventListener("click",function(){ lookup(h); document.getElementById("lookup").scrollIntoView({behavior:"smooth",block:"start"}); }); quick.appendChild(b); });
+
+/* ---------- calculator ---------- */
+var rVol=document.getElementById("rVol"), rDays=document.getElementById("rDays"), rRate=document.getElementById("rRate");
+function volFrom(v){ return Math.round(Math.pow(10,3+v/100*3)/100)*100; } /* $1k .. $1M log */
+function calc(){
+  var vol=volFrom(+rVol.value), days=+rDays.value, rate=+rRate.value/10000;
+  document.getElementById("vVol").textContent=money(vol,0); document.getElementById("vDays").textContent=days; document.getElementById("vRate").textContent=(rate*100).toFixed(2)+"%";
+  var perDay=vol*0.016, dep=perDay*days;
+  document.getElementById("oDep").textContent=money(dep,0); document.getElementById("oDay").textContent=money(perDay);
+  var yrs=[1,2,3,5,10], html="", maxv=dep*Math.pow(1+rate/365,365*10);
+  yrs.forEach(function(y){ var bal=dep*Math.pow(1+rate/365,365*y), inte=bal-dep; var pw=dep/maxv*100, iw=inte/maxv*100;
+    html+="<div><span>Year "+y+"</span><div class='bar2' style='display:flex'><i class='p' style='width:"+pw+"%'></i><i style='width:"+iw+"%'></i></div><span>"+money(bal,0)+" <small style='color:#1d7146'>+"+money(inte,0)+"</small></span></div>"; });
+  document.getElementById("ladder").innerHTML=html;
+  var daily=dep*rate/365;
+  document.getElementById("oNote").textContent="After the coin goes quiet, this account posts about "+money(daily)+" of interest per day in year one and never asks anyone to trade again. Burned on the way in: "+money(vol*0.004*days,0)+" of $SVNGS bought and destroyed.";
+}
+[rVol,rDays,rRate].forEach(function(r){ r.addEventListener("input",function(){ calc(); sTick(); }); });
+calc();
+
+/* ---------- accounts table + feed ---------- */
+var topB=document.querySelector("#top tbody"), rows=[];
+HANDLES.forEach(function(h){ var a=account(h); a.exists=true; rows.push(a); });
+rows.sort(function(x,y){ return (y.principal+y.interest-y.withdrawn)-(x.principal+x.interest-x.withdrawn); });
+rows.slice(0,9).forEach(function(a){
+  var tr=document.createElement("tr"); tr.className="r"; var bal=a.principal+a.interest-a.withdrawn;
+  tr.innerHTML="<td>@"+a.h+"</td><td class='m'>"+a.coins[0]+"</td><td class='m g'>+"+money(a.interest)+"</td><td class='m'>"+money(bal)+"</td><td><span class='st"+(a.claimed?"":" u")+"'>"+(a.claimed?"signed in":"unclaimed")+"</span></td>";
+  tr.addEventListener("click",function(){ lookup(a.h); document.getElementById("lookup").scrollIntoView({behavior:"smooth",block:"start"}); });
+  topB.appendChild(tr);
+});
+var feed=document.getElementById("feed");
+function feedRow(){
+  var a=rows[Math.floor(Math.random()*rows.length)], amt=0.05+Math.random()*Math.random()*12;
+  var d=document.createElement("div"); d.innerHTML="<span>"+tstr(new Date())+"</span><span>@"+a.h+" · "+a.coins[Math.floor(Math.random()*a.coins.length)]+" "+(Math.random()<.6?"buy":"sell")+"</span><span>+"+money(amt)+"</span>";
+  feed.insertBefore(d,feed.firstChild); while(feed.children.length>12) feed.removeChild(feed.lastChild);
+  burnedN+=amt/0.8*0.2/0.0021; burnEl.textContent=Math.floor(burnedN).toLocaleString();
+}
+var burnedN=18426113, burnEl=document.getElementById("burned"); burnEl.textContent=burnedN.toLocaleString();
+for(var i=0;i<8;i++) feedRow();
+setInterval(function(){ if(!document.hidden) feedRow(); },2600);
+</script>
+</body>
+</html>
