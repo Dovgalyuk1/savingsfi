@@ -1,4 +1,4 @@
-# Savings · $SVNGS
+# SavingsPad · $SVNGS
 
 Launch a coin for any X handle. Every trade deposits into their savings account. It grows until they show up.
 
