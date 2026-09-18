@@ -240,6 +240,70 @@ input[type=range]{width:100%;accent-color:var(--gold)}
 footer{padding:36px 0 60px;color:var(--mute2);font-size:12px;line-height:1.7}
 footer .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:24px}
 
+/* wallet modal */
+.hd-w{white-space:nowrap}
+.hd-w.bad{border-color:rgba(224,90,78,.6);color:var(--red)}
+.wdot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 3px rgba(127,217,166,.18);margin-right:8px;vertical-align:1px}
+.wdot.bad{background:var(--red);box-shadow:0 0 0 3px rgba(224,90,78,.18)}
+.ov{position:fixed;inset:0;z-index:110;background:rgba(4,10,22,.72);display:none;align-items:center;justify-content:center;padding:16px}
+.ov.show{display:flex;animation:fade .15s}
+@keyframes fade{from{opacity:0}}
+@keyframes rise{from{transform:translateY(8px);opacity:.6}}
+.modal{width:100%;max-width:430px;background:var(--navy2);border:1px solid rgba(244,239,227,.2);border-radius:16px;box-shadow:0 40px 90px -30px rgba(0,0,0,.9);overflow:hidden;animation:rise .2s;max-height:calc(100svh - 32px);display:flex;flex-direction:column}
+.modal-h{display:flex;align-items:center;gap:10px;padding:16px 18px 12px;border-bottom:1px solid var(--line)}
+.modal-h h3{font-size:16px;font-weight:600}
+.modal-h .x{background:transparent;margin-left:auto;width:32px;height:32px;border-radius:8px;border:1px solid rgba(244,239,227,.2);display:grid;place-items:center;color:var(--mute)}
+.modal-h .x:hover{border-color:rgba(244,239,227,.35);color:var(--paper)}
+.modal-b{padding:16px 18px 18px;overflow-y:auto}
+.netcard{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:rgba(0,0,0,.22);margin-bottom:14px}
+.netcard .ic{width:34px;height:34px;border-radius:9px;background:var(--navy3);border:1px solid rgba(244,239,227,.2);display:grid;place-items:center;flex:none}
+.netcard b{display:block;font-size:14px;font-weight:600}
+.netcard span{font-family:var(--fm);font-size:11px;color:var(--mute)}
+.wlist{display:grid;gap:8px}
+.wopt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:1px solid var(--line);border-radius:12px;background:var(--navy3);padding:10px 12px;transition:border-color .12s,box-shadow .12s}
+.wopt:hover{border-color:rgba(244,239,227,.35);box-shadow:0 0 0 3px rgba(232,200,116,.1)}
+.wopt img,.wopt .gic{width:30px;height:30px;border-radius:8px;flex:none;object-fit:contain}
+.wopt .gic{background:var(--line);display:grid;place-items:center}
+.wopt b{font-weight:500;font-size:14.5px}
+.wopt .badge{margin-left:auto;font-family:var(--fm);font-size:10px;letter-spacing:.06em;padding:3px 7px;border-radius:5px;background:rgba(127,217,166,.14);color:var(--mint)}
+.wopt.busy .badge{background:rgba(232,200,116,.18);color:var(--gold)}
+.wopt .lg{width:30px;height:30px;border-radius:8px;flex:none;display:grid;place-items:center;font-weight:700;font-size:14px;color:#fff}
+.wopt .chev{margin-left:auto;color:var(--mute2);transition:transform .15s}
+.wopt.open .chev{transform:rotate(90deg)}
+.whelp{display:none;border:1px solid var(--line);border-top:0;border-radius:0 0 12px 12px;margin-top:-10px;padding:16px 13px 12px;background:rgba(0,0,0,.22);font-size:13px;color:var(--mute);line-height:1.55}
+.whelp.show{display:block}
+.whelp b{color:var(--paper);font-weight:600}
+.whelp ol{margin:6px 0 10px;padding-left:18px}
+.whelp .acts{display:flex;flex-wrap:wrap;gap:6px}
+.whelp code{font-family:var(--fm);font-size:11.5px;background:var(--navy3);border:1px solid rgba(244,239,227,.2);border-radius:5px;padding:1px 5px;word-break:break-all;color:var(--paper)}
+.msec{font-family:var(--fm);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute2);margin:16px 0 8px;display:flex;justify-content:space-between}
+.wc{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:1px solid rgba(59,153,252,.5);border-radius:12px;background:rgba(59,153,252,.08);padding:10px 12px}
+.wc:hover{box-shadow:0 0 0 3px rgba(59,153,252,.16)}
+.wc b{font-weight:500}
+.wc small{margin-left:auto;font-family:var(--fm);font-size:11px;color:#7db8ff}
+.merr{margin-top:12px;font-size:13px;color:var(--red);display:none;background:rgba(224,90,78,.08);border:1px solid rgba(224,90,78,.3);border-radius:10px;padding:10px 12px}
+.merr.show{display:block}
+.mfoot{margin-top:14px;font-size:12px;color:var(--mute2);line-height:1.5}
+.wacct{display:grid;gap:10px}
+.wacct .who{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:rgba(0,0,0,.22)}
+.wacct .who canvas{width:40px;height:40px;border-radius:10px;flex:none}
+.wacct .who b{font-family:var(--fm);font-weight:500;font-size:14px;display:block}
+.wacct .who span{font-size:12px;color:var(--mute)}
+.wacct .who .cp{margin-left:auto}
+.wkv{border:1px solid var(--line);border-radius:12px;background:rgba(0,0,0,.22)}
+.wkv div{display:flex;justify-content:space-between;gap:10px;padding:9px 14px;font-size:13.5px;border-bottom:1px solid var(--line)}
+.wkv div:last-child{border-bottom:0}
+.wkv span{color:var(--mute)}
+.wkv b{font-family:var(--fm);font-weight:500;text-align:right}
+.wkv b.ok{color:var(--mint)} .wkv b.bad{color:var(--red)}
+.wacct .btns{display:flex;gap:8px}
+.wacct .btns .btn{flex:1}
+.lastq{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:rgba(0,0,0,.22);font-family:var(--fm);font-size:11.5px;color:var(--mute);line-height:1.6;word-break:break-all}
+.lastq h4{font-weight:500;font-size:10.5px;letter-spacing:.12em;color:var(--mute2);margin-bottom:6px}
+.lastq b{color:var(--paper);font-weight:500}
+
+
+
 /* toast */
 #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--paper);color:var(--ink);padding:12px 16px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:200;box-shadow:0 12px 30px rgba(0,0,0,.4);max-width:90vw;text-align:center}
 #toast.on{opacity:1;transform:translateX(-50%)}
@@ -260,6 +324,9 @@ footer .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;b
   .facts,.grid3,.grid4,.flow,.kv{grid-template-columns:1fr 1fr}
   .bk-rows{grid-template-columns:1fr 1fr}
   .hd .btn span.t{display:none}
+  .hd{gap:6px}.brand{font-size:19px}.brand img{width:26px;height:26px}
+  .hd .btn.small{padding:7px 8px;font-size:11px;border-radius:8px}
+  .hd-w .wl{font-size:0}.hd-w .wl::after{content:"Wallet";font-size:11px}
   .final{padding:28px 22px}
   .stamp{font-size:26px;top:96px;right:12px}
   .status{white-space:nowrap;font-size:9px;padding:4px 7px}
@@ -288,7 +355,8 @@ footer .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;b
   <div class="sp"></div>
   <button class="btn small" id="sndBtn" type="button">SOUND <span class="mono" id="sndSt">ON</span></button>
   <a class="btn small xLink" id="xBtn" href="#" target="_blank" rel="noopener">X</a>
-  <a class="btn small gold soon" id="buyBtn" href="#">Buy <span class="t">$SVNGS</span></a>
+  <a class="btn small gold" id="buyBtn" href="#">Buy <span class="t">$SVNGS</span></a>
+  <button class="btn small hd-w" id="wBtn" type="button"><span class="wl">Connect wallet</span></button>
 </div></header>
 
 <div class="mq"><div>
@@ -335,7 +403,7 @@ footer .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;b
       <div class="ledger" id="bkLedger"></div>
       <div class="bk-act">
         <button class="btn gold" id="bkWd" type="button">Sign in with X · Withdraw</button>
-        <small>free · any wallet · balance keeps earning</small>
+        <small id="payW">free · any wallet · balance keeps earning</small>
       </div>
       <div class="stamp" id="bkStamp">PAID OUT</div>
     </div>
@@ -468,6 +536,11 @@ footer .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;b
       </table>
     </div>
   </div>
+  <div class="grid2" style="margin-top:18px">
+    <div class="card"><div class="k">Your wallet</div><h3>Withdrawals land where you say</h3><p>Connect a wallet on Robinhood Chain to set where your withdrawals go and to see your $SVNGS balance once it is live. Connecting shares your address and nothing else; Savings never asks for a signature to read a balance.</p>
+      <div class="bk-act" style="margin-top:16px"><button class="btn gold" id="wBtn2" type="button">Connect wallet</button><small id="tokBal" style="color:var(--mute)">Connect a wallet on Robinhood Chain to see your $SVNGS.</small></div></div>
+    <div class="card"><div class="k">Wallets that work here</div><p>Robinhood Wallet supports Robinhood Chain out of the box. MetaMask, Rabby, Trust Wallet and OKX Wallet get the network added for you when you connect: chain ID 4663, ETH for gas, official RPC and explorer. Phone wallets connect by QR through WalletConnect.</p></div>
+  </div>
   <div class="grid4" style="margin-top:18px">
     <div class="card"><div class="k">Permanent bid</div><p>Twenty percent of every fee on every coin is a market buy of $SVNGS followed by a burn. Volume anywhere on Savings is demand for the token, and the supply only goes down.</p></div>
     <div class="card"><div class="k">No treasury</div><p>Savings holds nothing for itself. Deposits belong to handles, interest belongs to handles, and the buyback is burned rather than kept. There is no wallet to watch.</p></div>
@@ -505,6 +578,12 @@ footer .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;b
 </footer>
 </main>
 
+<div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="modal">
+    <div class="modal-h"><h3 id="mTitle">Connect wallet</h3><button class="x" id="mClose" aria-label="Close"><svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 2l10 10M12 2L2 12"/></svg></button></div>
+    <div class="modal-b" id="mBody"></div>
+  </div>
+</div>
 <div id="rain"></div>
 <div id="toast"></div>
 
@@ -513,9 +592,10 @@ footer .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;b
 window.CONTRACT = "";      /* адрес контракта */
 window.TWITTER  = "";      /* ссылка на X */
 window.BUY_URL  = "";      /* ссылка на покупку — пусто, пока Олег не даст */
+window.WC_PROJECT_ID = ""; /* WalletConnect / Reown project id (cloud.reown.com) — включает QR для Robinhood Wallet и телефонов */
 /* ================================== */
 var CA=(window.CONTRACT||"").trim(), TW=(window.TWITTER||"").trim(), BUY=(window.BUY_URL||"").trim();
-function toast(m){var t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove("on");},2200);}
+window.toast=function(m){var t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove("on");},2200);}
 if(CA){
   document.querySelectorAll(".ca-val").forEach(function(e){e.textContent=CA.slice(0,6)+"…"+CA.slice(-4);});
   document.getElementById("caBox").addEventListener("click",function(){var b=this.querySelector("b"),old=b.textContent;navigator.clipboard.writeText(CA).then(function(){b.textContent="copied";setTimeout(function(){b.textContent=old;},1200);});});
@@ -527,7 +607,7 @@ else{document.querySelectorAll("#xBtn,.xLink").forEach(function(a){a.addEventLis
 ["buyBtn","buyBtn2"].forEach(function(id){
   var b=document.getElementById(id); if(!b) return;
   if(BUY){b.href=BUY;b.target="_blank";b.rel="noopener";b.classList.remove("soon");}
-  else{b.addEventListener("click",function(e){e.preventDefault();toast("$SVNGS is not trading yet. Buy link appears at launch.");});}
+  else{b.addEventListener("click",function(e){e.preventDefault();toast("Buy link goes live with the launch. Check back in a moment.");});}
 });
 </script>
 
@@ -536,7 +616,7 @@ else{document.querySelectorAll("#xBtn,.xLink").forEach(function(a){a.addEventLis
 var AC=null, sfxOn=true;
 try{ sfxOn = localStorage.getItem("sv_snd")!=="off"; }catch(e){}
 function ac(){ try{ if(!AC){ AC=new (window.AudioContext||window.webkitAudioContext)(); } if(AC.state==="suspended") AC.resume(); return AC; }catch(e){ return null; } }
-function tone(f1,f2,dur,type,g){
+window.tone=function(f1,f2,dur,type,g){
   if(!sfxOn) return; var c=ac(); if(!c) return;
   var o=c.createOscillator(), gg=c.createGain(), t=c.currentTime;
   o.type=type||"sine"; o.frequency.setValueAtTime(f1,t);
@@ -708,6 +788,328 @@ function feedRow(){
 var burnedN=18426113, burnEl=document.getElementById("burned"); burnEl.textContent=burnedN.toLocaleString();
 for(var i=0;i<8;i++) feedRow();
 setInterval(function(){ if(!document.hidden) feedRow(); },2600);
+</script>
+<script>
+/* =================================================================
+   WALLET — EIP-6963 discovery + EIP-1193, Robinhood Chain (4663)
+   ================================================================= */
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id);};
+var CHAIN={
+  chainId:'0x133f',
+  chainName:'Robinhood Chain',
+  nativeCurrency:{name:'Ether',symbol:'ETH',decimals:18},
+  rpcUrls:['https://rpc.mainnet.chain.robinhood.com'],
+  blockExplorerUrls:['https://robinhoodchain.blockscout.com']
+};
+var TOKCA=(window.CONTRACT||'').trim();
+var WC_ID=(window.WC_PROJECT_ID||'').trim();
+var MOBILE=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+var W={providers:{},prov:null,info:null,addr:null,chain:null,eth:null,bal:null,dec:18};
+function store(k,v){
+  try{
+    if(v===undefined) return localStorage.getItem(k);
+    if(v===null) localStorage.removeItem(k); else localStorage.setItem(k,v);
+  }catch(e){ return null; }
+}
+function beep(a,b,d,t,g){ if(window.tone) window.tone(a,b,d,t,g); }
+function say(m){ if(window.toast) window.toast(m); }
+
+window.addEventListener('eip6963:announceProvider',function(e){
+  var d=e.detail; if(!d||!d.info||!d.provider) return;
+  W.providers[d.info.uuid]=d;
+  if($('ov').classList.contains('show') && !W.addr) renderPicker();
+});
+window.dispatchEvent(new Event('eip6963:requestProvider'));
+
+function short(a){ return a?a.slice(0,6)+'…'+a.slice(-4):''; }
+function isOk(){ return !!W.chain && W.chain.toLowerCase()===CHAIN.chainId; }
+function fmtUnits(hex,dec,dp){
+  try{
+    var v=BigInt(hex||'0x0'), base=BigInt(10)**BigInt(dec);
+    var whole=v/base, frac=v%base;
+    var f=frac.toString().padStart(dec,'0').slice(0,dp).replace(/0+$/,'');
+    return whole.toLocaleString('en-US')+(f?'.'+f:'');
+  }catch(e){ return '—'; }
+}
+function esc(s){ return String(s).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function pageUrl(){ return location.origin+location.pathname; }
+function listOptions(){
+  var list=Object.keys(W.providers).map(function(k){ return W.providers[k]; });
+  if(!list.length && window.ethereum){
+    var e=window.ethereum;
+    var nm=e.isRabby?'Rabby':e.isTrust||e.isTrustWallet?'Trust Wallet':e.isOkxWallet||e.isOKExWallet?'OKX Wallet':e.isRobinhood||e.isRobinhoodWallet?'Robinhood Wallet':e.isMetaMask?'MetaMask':'Browser wallet';
+    list.push({info:{uuid:'legacy',name:nm,icon:'',rdns:'legacy'},provider:e});
+  }
+  return list;
+}
+
+/* wallets that work on Robinhood Chain */
+var KNOWN=[
+  {k:'robinhood',n:'Robinhood Wallet',c:'#1c1d22',t:'R',m:/robinhood/i,
+   help:function(){ return '<p>Robinhood Wallet supports Robinhood Chain out of the box.</p><ol><li>Open Robinhood Wallet on your phone</li><li>Tap <b>Web3</b> (the globe icon)</li><li>Paste <code>'+esc(pageUrl())+'</code> and tap Connect wallet there</li></ol>'; },
+   acts:function(){ return (WC_ID?'<button class="btn small gold" data-act="wc">Scan QR with WalletConnect</button>':'')+'<button class="btn small" data-act="copy">Copy site link</button><a class="btn small" target="_blank" rel="noopener" href="https://robinhood.com/us/en/download/wallet/">Get the app ↗</a>'; }},
+  {k:'metamask',n:'MetaMask',c:'#F6851B',t:'M',m:/metamask/i,
+   help:function(){ return MOBILE?'<p>Opens this page inside the MetaMask app. Savings then adds Robinhood Chain for you.</p>':'<p>Install the MetaMask extension and reload this page. Savings adds Robinhood Chain (4663) to it when you connect.</p>'; },
+   acts:function(){ return MOBILE?'<a class="btn small gold" href="https://metamask.app.link/dapp/'+esc(location.host+location.pathname)+'">Open in MetaMask</a>':'<a class="btn small gold" target="_blank" rel="noopener" href="https://metamask.io/download/">Install MetaMask ↗</a>'+(WC_ID?'<button class="btn small" data-act="wc">Use the phone app (QR)</button>':''); }},
+  {k:'rabby',n:'Rabby',c:'#7084FF',t:'R',m:/rabby/i,
+   help:function(){ return '<p>Install the Rabby extension and reload this page. Robinhood Chain is added as a custom network when you connect.</p>'; },
+   acts:function(){ return '<a class="btn small gold" target="_blank" rel="noopener" href="https://rabby.io/">Get Rabby ↗</a>'+(WC_ID?'<button class="btn small" data-act="wc">Rabby mobile (QR)</button>':''); }},
+  {k:'trust',n:'Trust Wallet',c:'#0500FF',t:'T',m:/trust/i,
+   help:function(){ return MOBILE?'<p>Opens this page in the Trust Wallet browser. Approve adding Robinhood Chain when asked.</p>':'<p>Install the Trust Wallet extension and reload, or connect the mobile app by QR.</p>'; },
+   acts:function(){ return MOBILE?'<a class="btn small gold" href="https://link.trustwallet.com/open_url?coin_id=60&url='+encodeURIComponent(pageUrl())+'">Open in Trust Wallet</a>':'<a class="btn small gold" target="_blank" rel="noopener" href="https://trustwallet.com/download">Get Trust Wallet ↗</a>'+(WC_ID?'<button class="btn small" data-act="wc">Mobile app (QR)</button>':''); }},
+  {k:'okx',n:'OKX Wallet',c:'#2a2b30',t:'O',m:/okx|okex/i,
+   help:function(){ return '<p>Install OKX Wallet and reload this page, or open it from the app\u2019s Discover browser.</p>'; },
+   acts:function(){ return '<a class="btn small gold" target="_blank" rel="noopener" href="https://web3.okx.com/download">Get OKX Wallet ↗</a>'+(WC_ID?'<button class="btn small" data-act="wc">Mobile app (QR)</button>':'')+'<button class="btn small" data-act="copy">Copy site link</button>'; }}
+];
+
+var ov=$('ov'), mBody=$('mBody');
+function openModal(){ ov.classList.add('show'); if(W.addr) renderAccount(); else renderPicker(); window.dispatchEvent(new Event('eip6963:requestProvider')); beep(520,780,.08,'sine',.03); }
+function closeModal(){ ov.classList.remove('show'); }
+$('mClose').addEventListener('click',closeModal);
+ov.addEventListener('click',function(e){ if(e.target===ov) closeModal(); });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeModal(); });
+['wBtn','wBtn2'].forEach(function(id){ $(id).addEventListener('click',function(){ openModal(); }); });
+
+var CHAIN_IC='<svg width="18" height="18" viewBox="0 0 30 30" fill="none"><path d="M8 8v7.5a7 7 0 0 0 14 0V8" stroke="#f4efe3" stroke-width="2.4" stroke-linecap="round"/><path d="M6 19.5h9.5L24 11" stroke="#e8c874" stroke-width="2" stroke-linecap="round"/></svg>';
+function netCard(){ return '<div class="netcard"><span class="ic">'+CHAIN_IC+'</span><div><b>Robinhood Chain</b><span>chain ID 4663 · ETH for gas</span></div></div>'; }
+var WALLET_IC='<span class="gic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#8b8f98" stroke-width="1.5"><rect x="2" y="4" width="12" height="9" rx="2"/><path d="M10.5 8.5h1.5"/></svg></span>';
+var WC_IC='<span class="lg" style="background:#3B99FC"><svg width="18" height="12" viewBox="0 0 30 18" fill="#fff"><path d="M6.1 3.5c4.9-4.7 12.9-4.7 17.8 0l.6.6c.2.2.2.6 0 .9l-2 2c-.1.1-.3.1-.4 0l-.8-.8c-3.4-3.3-9-3.3-12.4 0l-.9.8c-.1.1-.3.1-.4 0l-2-2c-.2-.2-.2-.6 0-.9l.5-.6zm22 4.1 1.8 1.7c.2.2.2.6 0 .9l-8 7.8c-.2.2-.6.2-.9 0l-5.7-5.5c-.1-.1-.2-.1-.2 0l-5.7 5.5c-.2.2-.6.2-.9 0L.2 10.2c-.2-.2-.2-.6 0-.9L2 7.6c.2-.2.6-.2.9 0l5.7 5.5c.1.1.2.1.2 0l5.7-5.5c.2-.2.6-.2.9 0l5.7 5.5c.1.1.2.1.2 0l5.7-5.5c.3-.2.7-.2.9 0z"/></svg></span>';
+
+function renderPicker(err){
+  $('mTitle').textContent='Connect wallet';
+  var list=listOptions(), h=netCard(), taken={};
+  if(list.length){
+    h+='<div class="msec"><span>In this browser</span><span>'+list.length+' found</span></div><div class="wlist">'+list.map(function(p){
+      KNOWN.forEach(function(k){ if(k.m.test(p.info.name+' '+(p.info.rdns||''))) taken[k.k]=1; });
+      var ic=p.info.icon&&/^data:image\//.test(p.info.icon)?'<img alt="" src="'+esc(p.info.icon)+'">':WALLET_IC;
+      return '<button class="wopt" data-u="'+esc(p.info.uuid)+'">'+ic+'<b>'+esc(p.info.name)+'</b><span class="badge">DETECTED</span></button>';
+    }).join('')+'</div>';
+  }
+  if(WC_ID){
+    h+='<div class="msec"><span>Phone wallet</span></div><button class="wc" data-act="wc">'+WC_IC+'<b>WalletConnect</b><small>QR code</small></button>';
+  }
+  var rest=KNOWN.filter(function(k){ return !taken[k.k]; });
+  if(rest.length){
+    h+='<div class="msec"><span>'+(list.length?'Other wallets':'Wallets for Robinhood Chain')+'</span></div><div class="wlist">'+rest.map(function(k){
+      return '<button class="wopt" data-k="'+k.k+'"><span class="lg" style="background:'+k.c+'">'+k.t+'</span><b>'+k.n+'</b><svg class="chev" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 2.5 8 6l-3.5 3.5"/></svg></button><div class="whelp" data-h="'+k.k+'">'+k.help()+'<div class="acts">'+k.acts()+'</div></div>';
+    }).join('')+'</div>';
+  }
+  h+='<div class="merr'+(err?' show':'')+'" id="mErr">'+(err?esc(err):'')+'</div>';
+  h+='<p class="mfoot">If Robinhood Chain is not in your wallet yet, Savings asks it to add the network with the official RPC and explorer. Connecting only shares your address, and nothing here asks for a signature.</p>';
+  mBody.innerHTML=h;
+  mBody.querySelectorAll('.wopt[data-u]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var u=b.getAttribute('data-u'), p=u==='legacy'?listOptions()[0]:W.providers[u];
+      b.classList.add('busy'); var bd=b.querySelector('.badge'); if(bd) bd.textContent='CHECK YOUR WALLET…';
+      connect(p).catch(function(e){ renderPicker(niceErr(e)); });
+    });
+  });
+  mBody.querySelectorAll('.wopt[data-k]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var k=b.getAttribute('data-k'), hp=mBody.querySelector('.whelp[data-h="'+k+'"]'), open=!hp.classList.contains('show');
+      mBody.querySelectorAll('.whelp').forEach(function(x){ x.classList.remove('show'); });
+      mBody.querySelectorAll('.wopt[data-k]').forEach(function(x){ x.classList.remove('open'); });
+      if(open){ hp.classList.add('show'); b.classList.add('open'); }
+    });
+  });
+  mBody.querySelectorAll('[data-act="wc"]').forEach(function(b){ b.addEventListener('click',function(){ connectWC().catch(function(e){ renderPicker(niceErr(e)); }); }); });
+  mBody.querySelectorAll('[data-act="copy"]').forEach(function(b){ b.addEventListener('click',function(){ var t=b.textContent; navigator.clipboard.writeText(pageUrl()).then(function(){ b.textContent='Copied'; setTimeout(function(){ b.textContent=t; },1200); }); }); });
+}
+function niceErr(e){
+  var c=e&&(e.code||(e.data&&e.data.originalError&&e.data.originalError.code));
+  if(c===4001) return 'Request rejected in the wallet.';
+  if(c===-32002) return 'Your wallet already has a pending request. Open it and finish or cancel that first.';
+  if(e&&/Connection request reset|User closed modal|Modal closed/i.test(e.message||'')) return 'QR window closed before the wallet connected.';
+  return (e&&e.message)?e.message.slice(0,160):'Something went wrong while connecting.';
+}
+function req(method,params){ return W.prov.request({method:method,params:params||[]}); }
+
+function switchChain(){
+  return req('wallet_switchEthereumChain',[{chainId:CHAIN.chainId}]).catch(function(e){
+    var c=e&&(e.code||(e.data&&e.data.originalError&&e.data.originalError.code));
+    if(c===4902||c===-32603||/unrecognized|not added|unknown chain/i.test(e&&e.message||'')){
+      return req('wallet_addEthereumChain',[CHAIN]);
+    }
+    throw e;
+  }).then(function(){ return req('eth_chainId'); }).then(function(id){ W.chain=id; });
+}
+
+var bound=null;
+function bind(p){
+  if(bound===p||!p.on) return;
+  if(bound&&bound.removeListener){ try{ bound.removeListener('accountsChanged',onAcc); bound.removeListener('chainChanged',onChain); bound.removeListener('disconnect',onDisc); }catch(e){} }
+  p.on('accountsChanged',onAcc); p.on('chainChanged',onChain);
+  if(W.info&&W.info.rdns==='walletconnect') p.on('disconnect',onDisc);
+  bound=p;
+}
+function onAcc(a){ if(!a||!a.length){ disconnect(true); return; } W.addr=a[0]; W.eth=null; W.bal=null; refresh(); }
+function onChain(id){ W.chain=typeof id==='number'?'0x'+id.toString(16):id; refresh(); }
+function onDisc(){ disconnect(true); }
+
+function afterConnect(){
+  store('sv_wallet',W.info.rdns||W.info.uuid);
+  refresh(); renderAccount();
+  say('Connected '+short(W.addr)+(isOk()?' on Robinhood Chain':''));
+  beep(660,990,.12,'triangle',.05);
+}
+function connect(p){
+  if(!p) return Promise.reject(new Error('No wallet selected.'));
+  W.prov=p.provider; W.info=p.info;
+  return req('eth_requestAccounts').then(function(a){
+    if(!a||!a.length) throw new Error('The wallet returned no accounts.');
+    W.addr=a[0]; bind(W.prov);
+    return req('eth_chainId');
+  }).then(function(id){
+    W.chain=id;
+    if(!isOk()) return switchChain().catch(function(e){ say('Connected, but still on another network. '+niceErr(e)); });
+  }).then(afterConnect);
+}
+
+/* WalletConnect — loaded only when used */
+var WCP=null;
+function loadWC(){
+  if(window.HP_WC) return Promise.resolve(window.HP_WC);
+  return new Promise(function(res,rej){
+    var s=document.createElement('script'); s.src='assets/wc.js'; s.async=true;
+    s.onload=function(){ window.HP_WC?res(window.HP_WC):rej(new Error('WalletConnect failed to load.')); };
+    s.onerror=function(){ rej(new Error('WalletConnect failed to load. Check your connection.')); };
+    document.head.appendChild(s);
+  });
+}
+function initWC(){
+  if(WCP) return Promise.resolve(WCP);
+  return loadWC().then(function(EP){
+    return EP.init({
+      projectId:WC_ID, optionalChains:[4663], showQrModal:true,
+      rpcMap:{4663:CHAIN.rpcUrls[0]},
+      metadata:{name:'Savings',description:'Launch a coin for any X handle. Every trade deposits into their savings account.',url:location.origin,icons:[location.origin+location.pathname.replace(/[^/]*$/,'')+'favicon.png']},
+      qrModalOptions:{themeMode:'dark'}
+    });
+  }).then(function(p){ WCP=p; return p; });
+}
+function connectWC(){
+  if(!WC_ID) return Promise.reject(new Error('WalletConnect is not configured yet.'));
+  closeModal();
+  return initWC().then(function(p){
+    W.prov=p; W.info={uuid:'walletconnect',name:'WalletConnect',rdns:'walletconnect'};
+    return (p.session?Promise.resolve():p.connect({optionalChains:[4663],rpcMap:{4663:CHAIN.rpcUrls[0]}})).then(function(){
+      var a=p.accounts||[]; if(!a.length) throw new Error('The wallet returned no accounts.');
+      W.addr=a[0]; W.chain='0x'+Number(p.chainId||4663).toString(16); bind(p);
+      if(!isOk()) return switchChain().catch(function(e){ say('Connected, but the wallet did not switch to Robinhood Chain. '+niceErr(e)); });
+    });
+  }).then(function(){ openModal(); afterConnect(); }).catch(function(e){ openModal(); throw e; });
+}
+
+function disconnect(silent){
+  if(W.prov&&!silent){
+    if(W.info&&W.info.rdns==='walletconnect'){ try{ W.prov.disconnect().catch(function(){}); }catch(e){} }
+    else { try{ req('wallet_revokePermissions',[{eth_accounts:{}}]).catch(function(){}); }catch(e){} }
+  }
+  W.addr=null; W.chain=null; W.eth=null; W.bal=null;
+  store('sv_wallet',null);
+  paint();
+  if(ov.classList.contains('show')) renderPicker();
+  if(!silent) say('Disconnected');
+}
+
+function refresh(){
+  paint();
+  if(!W.addr||!isOk()){ if(ov.classList.contains('show')&&W.addr) renderAccount(); return; }
+  var addr=W.addr;
+  req('eth_getBalance',[addr,'latest']).then(function(b){ if(addr!==W.addr) return; W.eth=b; if(ov.classList.contains('show')) renderAccount(); }).catch(function(){});
+  if(TOKCA){
+    var data='0x70a08231'+addr.toLowerCase().replace(/^0x/,'').padStart(64,'0');
+    req('eth_call',[{to:TOKCA,data:'0x313ce567'},'latest']).then(function(d){ var n=parseInt(d,16); if(n>=0&&n<=36) W.dec=n; }).catch(function(){})
+    .then(function(){ return req('eth_call',[{to:TOKCA,data:data},'latest']); })
+    .then(function(b){ if(addr!==W.addr) return; W.bal=b; paint(); if(ov.classList.contains('show')) renderAccount(); }).catch(function(){});
+  }
+}
+
+function paint(){
+  var b=$('wBtn'), b2=$('wBtn2'), tb=$('tokBal'), pw=$('payW');
+  b.classList.remove('bad');
+  if(!W.addr){
+    b.innerHTML='<span class="wl">Connect wallet</span>'; b2.textContent='Connect wallet';
+    tb.textContent='Connect a wallet on Robinhood Chain to see your $SVNGS.';
+    if(pw) pw.textContent='free · any wallet · balance keeps earning';
+  } else if(!isOk()){
+    b.classList.add('bad'); b.innerHTML='<span class="net"><i class="wdot bad"></i>Wrong network</span>';
+    b2.textContent='Switch to Robinhood Chain';
+    tb.textContent='Your wallet is on another network. $SVNGS lives on Robinhood Chain.';
+    if(pw) pw.textContent='switch to Robinhood Chain to set a payout wallet';
+  } else {
+    b.innerHTML='<span class="net"><i class="wdot"></i><span class="addr">'+short(W.addr)+'</span></span>';
+    b2.textContent='Wallet connected · '+short(W.addr);
+    tb.innerHTML=!TOKCA?'Balance shows once $SVNGS is live · <b>'+short(W.addr)+'</b>':'Your balance · <b>'+(W.bal?fmtUnits(W.bal,W.dec,2):'…')+' $SVNGS</b>';
+    if(pw) pw.innerHTML='payout wallet · <b>'+short(W.addr)+'</b> · balance keeps earning';
+  }
+}
+
+/* identicon */
+function hsh(s){ var h=2166136261; for(var i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619); } return h>>>0; }
+function drawAv(cv,seed){
+  var c=cv.getContext('2d'), r=seed, n=5, u=cv.width/n;
+  function nx(){ r=(Math.imul(r,1664525)+1013904223)>>>0; return r/4294967296; }
+  var cols=['#e8c874','#7fd9a6','#9ec3ff','#f4efe3'], col=cols[Math.floor(nx()*4)];
+  c.fillStyle='#0a1a33'; c.fillRect(0,0,cv.width,cv.height);
+  c.fillStyle=col;
+  for(var y=0;y<n;y++) for(var x=0;x<3;x++) if(nx()<.5){ c.fillRect(x*u,y*u,u,u); c.fillRect((n-1-x)*u,y*u,u,u); }
+}
+
+function renderAccount(){
+  if(!W.addr){ renderPicker(); return; }
+  $('mTitle').textContent='Your wallet';
+  var ok=isOk();
+  var balTxt=!TOKCA?'once live':(W.bal==null?'…':fmtUnits(W.bal,W.dec,2));
+  var h='<div class="wacct">'+
+    '<div class="who"><canvas width="80" height="80" id="accAv"></canvas><div><b>'+short(W.addr)+'</b><span>'+esc(W.info?W.info.name:'Wallet')+'</span></div><button class="btn small cp" id="cpA">Copy</button></div>'+
+    '<div class="wkv">'+
+      '<div><span>Network</span>'+(ok?'<b class="ok">Robinhood Chain</b>':'<b class="bad">chain '+parseInt(W.chain,16)+'</b>')+'</div>'+
+      '<div><span>ETH</span><b>'+(ok?(W.eth?fmtUnits(W.eth,18,5):'…'):'—')+'</b></div>'+
+      '<div><span>$SVNGS</span><b>'+(ok?balTxt:'—')+'</b></div>'+
+      '<div><span>Payout wallet</span><b>'+(ok?'this address':'—')+'</b></div>'+
+    '</div>';
+  if(ok){ h+='<div class="lastq"><h4>WITHDRAWALS</h4>Sign in with X on an account page and the cleared balance is sent here, in one transaction, with no fee. Nothing to sign until then.</div>'; }
+  h+='<div class="btns">'+(ok?'<a class="btn small" target="_blank" rel="noopener" href="'+CHAIN.blockExplorerUrls[0]+'/address/'+W.addr+'">Explorer ↗</a>':'<button class="btn small gold" id="swN">Switch network</button>')+
+    '<button class="btn small" id="dcB">Disconnect</button></div>'+
+  '</div>';
+  mBody.innerHTML=h;
+  drawAv($('accAv'),hsh(W.addr.toLowerCase()));
+  $('cpA').addEventListener('click',function(){ var b=this; navigator.clipboard.writeText(W.addr).then(function(){ b.textContent='Copied'; setTimeout(function(){ b.textContent='Copy'; },1200); }); });
+  $('dcB').addEventListener('click',function(){ disconnect(false); });
+  if($('swN')) $('swN').addEventListener('click',function(){ switchChain().then(refresh).catch(function(e){ say(niceErr(e)); }); });
+}
+
+/* silent reconnect */
+(function(){
+  var last=store('sv_wallet'); if(!last) return;
+  if(last==='walletconnect'){
+    if(!WC_ID) return;
+    initWC().then(function(p){
+      if(!p.session||!(p.accounts||[]).length) return;
+      W.prov=p; W.info={uuid:'walletconnect',name:'WalletConnect',rdns:'walletconnect'};
+      W.addr=p.accounts[0]; W.chain='0x'+Number(p.chainId||4663).toString(16); bind(p); refresh();
+    }).catch(function(){});
+    return;
+  }
+  setTimeout(function(){
+    var list=listOptions(), p=null;
+    list.forEach(function(x){ if(x.info.rdns===last||x.info.uuid===last) p=x; });
+    if(!p&&last==='legacy') p=list[0];
+    if(!p) return;
+    p.provider.request({method:'eth_accounts'}).then(function(a){
+      if(!a||!a.length) return;
+      W.prov=p.provider; W.info=p.info; W.addr=a[0]; bind(W.prov);
+      return W.prov.request({method:'eth_chainId'}).then(function(id){ W.chain=id; refresh(); });
+    }).catch(function(){});
+  },350);
+})();
+
+paint();
+window.__uww=W;
+})();
 </script>
 </body>
 </html>
